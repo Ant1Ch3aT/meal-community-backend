@@ -47,9 +47,9 @@ async def closeup(app: Backend, loop: AbstractEventLoop) -> None:
 
 def create_app(config: BackendConfig) -> Backend:
     backend = Backend("backend", error_handler=ErrorHandler())
-    config.CORS_ORIGINS = "http://localhost"
+    config.CORS_ORIGINS = "http://localhost:5173"
     config.CORS_SUPPORTS_CREDENTIALS = True
-    config.CORS_ALLOW_HEADERS = ["Content-Type", "Authorization"]
+    config.CORS_ALLOW_HEADERS = ["Content-Type", "Authorization", "Set-Cookie"]
     backend.config.update(config)
     backend.blueprint(endpoint)
     backend.before_server_start(startup)
