@@ -1,11 +1,12 @@
-from backend.domain.entities.school_info import SchoolInfo
-from backend.domain.entities.user import User
-from backend.infrastructure.sqlalchemy.entities.school_info import SchoolInfoSchema
-from backend.infrastructure.sqlalchemy.entities.user import UserSchema
-from backend.domain.repositories.user import UserRepository
-from backend.infrastructure.sqlalchemy import SQLAlchemy
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
+
+from backend.domain.entities.school_info import SchoolInfo
+from backend.domain.entities.user import User
+from backend.domain.repositories.user import UserRepository
+from backend.infrastructure.sqlalchemy import SQLAlchemy
+from backend.infrastructure.sqlalchemy.entities.school_info import SchoolInfoSchema
+from backend.infrastructure.sqlalchemy.entities.user import UserSchema
 
 
 class SQLAlchemyUserRepository(UserRepository):

@@ -1,8 +1,9 @@
+from secrets import token_urlsafe
+
 from backend.domain.entities.refresh_token import RefreshToken
 from backend.infrastructure.valkey.entities.repositories.refresh_token import (
     ValkeyRefreshTokenRepository,
 )
-from secrets import token_urlsafe
 
 
 class CreateRefreshTokenUseCase:

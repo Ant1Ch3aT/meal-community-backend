@@ -3,9 +3,9 @@ from backend.application.exceptions import (
     UserAlreadyExists,
     UserNotFound,
 )
+from backend.application.use_cases.get.user import GetUserIDByEmail
 from backend.domain.entities.user import User
 from backend.domain.repositories.user import UserRepository
-from backend.application.use_cases.get.user import GetUserIDByEmail
 
 
 class CreateUserUseCase:

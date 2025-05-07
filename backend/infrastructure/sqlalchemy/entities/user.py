@@ -2,9 +2,8 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import DateTime, func
-
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from backend.domain.entities.user import User
 from backend.infrastructure.sqlalchemy.base import Base

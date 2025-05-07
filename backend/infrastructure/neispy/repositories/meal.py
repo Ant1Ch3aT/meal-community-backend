@@ -1,11 +1,12 @@
 from datetime import datetime
+
 from neispy import Neispy
+from neispy.error import DataNotFound
 
 from backend.domain.entities.meal import Meal
 from backend.domain.repositories.meal import MealRepository
-from backend.infrastructure.neispy.entities.meal import NeispyMeal
 from backend.infrastructure.datetime import to_yyyymmdd
-from neispy.error import DataNotFound
+from backend.infrastructure.neispy.entities.meal import NeispyMeal
 
 
 class NeispyMealRepository(MealRepository):
@@ -27,7 +28,4 @@ class NeispyMealRepository(MealRepository):
 
         row = info.mealServiceDietInfo[1].row
 
-        return [
-            NeispyMeal.from_neispy(meal)
-            for meal in row
-        ]
+        return [NeispyMeal.from_neispy(meal) for meal in row]

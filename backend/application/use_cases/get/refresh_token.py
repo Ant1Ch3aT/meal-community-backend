@@ -1,3 +1,4 @@
+from backend.application.exceptions import BackendException
 from backend.domain.entities.refresh_token import RefreshToken
 from backend.infrastructure.valkey.entities.repositories.refresh_token import (
     ValkeyRefreshTokenRepository,
@@ -18,4 +19,4 @@ class GetRefreshTokenUseCase:
         if nullable_refresh_token:
             return nullable_refresh_token
 
-        raise ValueError("Refresh token not found")
+        raise BackendException("Refresh token not found")

@@ -1,9 +1,10 @@
 from types import SimpleNamespace
-from sanic import Config, Request, Sanic
+
+from sanic import Config, Request, Sanic, json
 from sanic.handlers import ErrorHandler as SanicErrorHandler
 from sanic.response.types import HTTPResponse
+
 from backend.application.exceptions import *
-from sanic import json
 
 
 class ErrorHandler(SanicErrorHandler):

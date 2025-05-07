@@ -1,7 +1,6 @@
 from types import SimpleNamespace
 from typing import Any, Callable
 
-
 from neispy import Neispy
 from sanic.app import Sanic
 from sanic.request import Request
@@ -11,10 +10,10 @@ from backend.infrastructure.config import BackendConfig
 from backend.infrastructure.neispy.repositories.meal import NeispyMealRepository
 from backend.infrastructure.neispy.repositories.school import NeispySchoolRepository
 from backend.infrastructure.sqlalchemy import SQLAlchemy
+from backend.infrastructure.sqlalchemy.repositories.user import SQLAlchemyUserRepository
 from backend.infrastructure.valkey.entities.repositories.refresh_token import (
     ValkeyRefreshTokenRepository,
 )
-from backend.infrastructure.sqlalchemy.repositories.user import SQLAlchemyUserRepository
 
 
 class BackendContext(SimpleNamespace):

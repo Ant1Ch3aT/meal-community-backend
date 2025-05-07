@@ -1,5 +1,6 @@
 import asyncio
 from datetime import timedelta
+
 from backend.application.exceptions import MealNotFound
 from backend.domain.entities.meal import Meal
 from backend.domain.repositories.meal import MealRepository

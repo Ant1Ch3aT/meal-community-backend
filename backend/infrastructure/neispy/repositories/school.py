@@ -1,9 +1,9 @@
 from neispy import Neispy
+from neispy.error import DataNotFound
 
 from backend.domain.entities.school import School
 from backend.domain.repositories.school import SchoolRepository
 from backend.infrastructure.neispy.entities.school import NeispySchool
-from neispy.error import DataNotFound
 
 
 class NeispySchoolRepository(SchoolRepository):

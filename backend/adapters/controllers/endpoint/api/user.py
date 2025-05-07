@@ -1,18 +1,21 @@
 from sanic import BadRequest, json
 from sanic.blueprints import Blueprint
 from sanic_ext import validate
+
 from backend.application.dtos.user import CreateUserDTO, LoginUserDTO
 from backend.application.use_cases.create.refresh_token import CreateRefreshTokenUseCase
+from backend.application.use_cases.create.user import CreateUserUseCase
 from backend.application.use_cases.delete.refresh_token import DeleteRefreshTokenUseCase
 from backend.application.use_cases.get.refresh_token import GetRefreshTokenUseCase
-from backend.infrastructure.jwt import require_auth
-from backend.infrastructure.sanic import BackendRequest
-from backend.application.use_cases.create.user import CreateUserUseCase
 from backend.application.use_cases.get.user import (
     GetUserByIDUseCase,
     GetUserIDByEmailWithPassword,
 )
-
+from backend.application.use_cases.update.refresh_token import (
+    UpdateRefreshTokenTTLUseCase,
+)
+from backend.infrastructure.jwt import require_auth
+from backend.infrastructure.sanic import BackendRequest
 
 user = Blueprint("user_endpoint", url_prefix="/user")
 
@@ -94,9 +97,26 @@ async def get_user(request: BackendRequest, user_id: int):
     return json(user.to_dict())
 
 
+@user.post("/check")
+@require_auth
+async def is_valid_user(request: BackendRequest, user_id: int):
+    client_refresh_token_value = request.cookies.get("refresh_token")
+    if not client_refresh_token_value:
+        raise BadRequest("Refresh token is missing.")
+
+    exist_refresh_token = await GetRefreshTokenUseCase(
+        request.app.ctx.refresh_token_repository
+    ).execute(client_refresh_token_value)
+
+    await UpdateRefreshTokenTTLUseCase(
+        request.app.ctx.refresh_token_repository
+    ).execute(exist_refresh_token.value)
+
+    return json({"message": "Valid user."})
+
+
 @user.post("/refresh")
 async def refresh_token(request: BackendRequest):
-    print(request.cookies)
     client_refresh_token_value = request.cookies.get("refresh_token")
     if not client_refresh_token_value:
         raise BadRequest("Refresh token is missing.")

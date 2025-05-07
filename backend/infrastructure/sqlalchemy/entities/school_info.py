@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
+from sqlalchemy import ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column
 
 from backend.domain.entities.school_info import SchoolInfo

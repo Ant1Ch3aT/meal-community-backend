@@ -1,10 +1,10 @@
 from sanic import json
 from sanic.blueprints import Blueprint
 from sanic_ext import validate
+
 from backend.application.dtos.school import SearchSchoolDTO
 from backend.application.use_cases.get.school import GetSchoolByName
 from backend.infrastructure.sanic import BackendRequest
-
 
 school = Blueprint("school_endpoint", url_prefix="/school")
 

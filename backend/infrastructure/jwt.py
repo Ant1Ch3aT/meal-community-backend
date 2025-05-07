@@ -1,6 +1,7 @@
 from datetime import UTC, datetime, timedelta
 from functools import wraps
 from typing import Any, Callable, Coroutine, Optional, cast
+
 from jwt import decode, encode
 from sanic import Unauthorized
 

@@ -31,5 +31,5 @@ class ValkeyRefreshTokenRepository(RefreshTokenRepository):
 
     async def update_refresh_token_ttl(self, refresh_token_value: str) -> None:
         await self.valkey.expire(
-            f"{self.prefix}:{ refresh_token_value}", self.expires_in
+            f"{self.prefix}:{refresh_token_value}", self.expires_in
         )
