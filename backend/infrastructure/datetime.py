@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 
 
 def to_datetime(date: str) -> datetime:
@@ -8,7 +8,14 @@ def to_datetime(date: str) -> datetime:
     return datetime.strptime(date.strip(), "%Y%m%d")
 
 
-def to_yyyymmdd(datetime: datetime) -> str:
+def to_date(date: str) -> date:
+    """
+    YYYYMMDD 형식의 문자열을 date로 변환합니다.
+    """
+    return datetime.strptime(date.strip(), "%Y%m%d").date()
+
+
+def to_yyyymmdd(datetime: datetime | date) -> str:
     """
     datetime을 YYYYMMDD 형식의 문자열로 변환합니다.
     """
