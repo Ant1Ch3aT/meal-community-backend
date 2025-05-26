@@ -12,6 +12,7 @@ from backend.infrastructure.neispy.repositories.school import NeispySchoolReposi
 from backend.infrastructure.sqlalchemy import SQLAlchemy
 from backend.infrastructure.sqlalchemy.repositories.meal import SQLAlchemyMealRepository
 from backend.infrastructure.sqlalchemy.repositories.user import SQLAlchemyUserRepository
+from backend.infrastructure.sqlalchemy.repositories.comment import SQLAlchemyCommentRepository
 from backend.infrastructure.valkey.entities.repositories.refresh_token import (
     ValkeyRefreshTokenRepository,
 )
@@ -22,6 +23,7 @@ class BackendContext(SimpleNamespace):
     valkey: Valkey
     neispy: Neispy
     user_repository: SQLAlchemyUserRepository
+    comment_repository: SQLAlchemyCommentRepository
     refresh_token_repository: ValkeyRefreshTokenRepository
     neispy_school_repository: NeispySchoolRepository
     neispy_meal_repository: NeispyMealRepository

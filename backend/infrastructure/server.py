@@ -14,6 +14,7 @@ from backend.infrastructure.sanic import Backend
 from backend.infrastructure.sqlalchemy import SQLAlchemy
 from backend.infrastructure.sqlalchemy.repositories.meal import SQLAlchemyMealRepository
 from backend.infrastructure.sqlalchemy.repositories.user import SQLAlchemyUserRepository
+from backend.infrastructure.sqlalchemy.repositories.comment import SQLAlchemyCommentRepository
 from backend.infrastructure.valkey.entities.repositories.refresh_token import (
     ValkeyRefreshTokenRepository,
 )
@@ -27,6 +28,7 @@ async def startup(app: Backend, loop: AbstractEventLoop) -> None:
 
     # Initialize Repositories
     app.ctx.user_repository = SQLAlchemyUserRepository(app.ctx.sa)
+    app.ctx.comment_repository = SQLAlchemyCommentRepository(app.ctx.sa)
     app.ctx.refresh_token_repository = ValkeyRefreshTokenRepository(
         app.ctx.valkey, app.config.REFRESH_TOKEN_EXP
     )

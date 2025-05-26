@@ -29,3 +29,23 @@ class CreateReplyCommentUseCase:
         if CreateCommentStatus.PARENT_COMMENT_NOT_FOUND == status:
             raise CommentNotFound
         return
+
+
+class CreateCommentUseCase:
+    def __init__(self, comment_repository: CommentRepository):
+        self.comment_repository = comment_repository
+
+    async def execute(
+        self,
+        user_id: int,
+        meal_id: int,
+        comment: Comment,
+    ) -> None:
+        if comment.parent_id:
+            return await CreateReplyCommentUseCase(self.comment_repository).execute(
+                user_id, meal_id, comment, comment.parent_id
+            )
+
+        return await CreateNewCommentUseCase(self.comment_repository).execute(
+            user_id, meal_id, comment
+        )
