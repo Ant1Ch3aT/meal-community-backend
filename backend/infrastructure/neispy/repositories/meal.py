@@ -5,9 +5,9 @@ from neispy import Neispy
 from neispy.error import DataNotFound
 
 from backend.domain.entities.meal import Meal
+from backend.domain.enum import CreateMealStatus
 from backend.domain.repositories.meal import MealRepository
 from backend.infrastructure.datetime import to_yyyymmdd
-from backend.domain.enum import CreateMealStatus
 from backend.infrastructure.neispy.entities.meal import NeispyMeal
 
 
@@ -31,6 +31,11 @@ class NeispyMealRepository(MealRepository):
         row = info.mealServiceDietInfo[1].row
 
         return [NeispyMeal.from_neispy(meal) for meal in row]
+
+    async def get_with_id_by_code(
+        self, edu_office_code: str, standard_school_code: str, date: date
+    ) -> list[tuple[int, Meal]]:
+        raise NotImplementedError("Cannot get meal with id with NeispyMealRepository.")
 
     async def get_id_by_code(
         self,

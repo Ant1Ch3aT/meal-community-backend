@@ -5,8 +5,8 @@ from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
 from backend.domain.entities.meal import Meal
-from backend.domain.repositories.meal import MealRepository
 from backend.domain.enum import CreateMealStatus
+from backend.domain.repositories.meal import MealRepository
 from backend.infrastructure.sqlalchemy import SQLAlchemy
 from backend.infrastructure.sqlalchemy.entities.meal import MealSchema
 from backend.infrastructure.sqlalchemy.entities.school_info import SchoolInfoSchema
@@ -16,9 +16,9 @@ class SQLAlchemyMealRepository(MealRepository):
     def __init__(self, sa: SQLAlchemy):
         self.sa = sa
 
-    async def get_by_code(
+    async def _get_schema_by_code(
         self, edu_office_code: str, standard_school_code: str, date: date
-    ) -> list[Meal]:
+    ) -> list[MealSchema]:
         async with self.sa.session_maker() as session:
             async with session.begin():
                 result = await session.execute(
@@ -35,10 +35,28 @@ class SQLAlchemyMealRepository(MealRepository):
                 )
 
                 return [
-                    meal.to_entity()
+                    meal
                     for school_info in result.scalars().all()
                     for meal in school_info.meals
                 ]
+
+    async def get_by_code(
+        self, edu_office_code: str, standard_school_code: str, date: date
+    ) -> list[Meal]:
+        meal_schemas = await self._get_schema_by_code(
+            edu_office_code, standard_school_code, date
+        )
+
+        return [schema.to_entity() for schema in meal_schemas]
+
+    async def get_with_id_by_code(
+        self, edu_office_code: str, standard_school_code: str, date: date
+    ) -> list[tuple[int, Meal]]:
+        meal_schemas = await self._get_schema_by_code(
+            edu_office_code, standard_school_code, date
+        )
+
+        return [(schema.id, schema.to_entity()) for schema in meal_schemas]
 
     async def get_id_by_code(
         self,
@@ -72,7 +90,7 @@ class SQLAlchemyMealRepository(MealRepository):
         edu_office_code: str,
         standard_school_code: str,
         meal: Meal,
-    ) -> CreateMealStatus:
+    ) -> CreateMealStatus | int:
         async with self.sa.session_maker() as session:
             async with session.begin():
                 result = await session.execute(
@@ -97,4 +115,4 @@ class SQLAlchemyMealRepository(MealRepository):
 
                 session.add(meal_schema)
                 await session.commit()
-                return CreateMealStatus.SUCCESS
+                return meal_schema.id

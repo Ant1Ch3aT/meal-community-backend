@@ -10,9 +10,11 @@ from backend.infrastructure.config import BackendConfig
 from backend.infrastructure.neispy.repositories.meal import NeispyMealRepository
 from backend.infrastructure.neispy.repositories.school import NeispySchoolRepository
 from backend.infrastructure.sqlalchemy import SQLAlchemy
+from backend.infrastructure.sqlalchemy.repositories.comment import (
+    SQLAlchemyCommentRepository,
+)
 from backend.infrastructure.sqlalchemy.repositories.meal import SQLAlchemyMealRepository
 from backend.infrastructure.sqlalchemy.repositories.user import SQLAlchemyUserRepository
-from backend.infrastructure.sqlalchemy.repositories.comment import SQLAlchemyCommentRepository
 from backend.infrastructure.valkey.entities.repositories.refresh_token import (
     ValkeyRefreshTokenRepository,
 )

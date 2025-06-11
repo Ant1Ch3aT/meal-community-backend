@@ -2,7 +2,7 @@ from sanic import json
 from sanic.blueprints import Blueprint
 from sanic_ext import validate
 
-from backend.application.dtos.comment import CreateCommentDTO
+from backend.application.dtos.comment import CreateCommentDTO, GetCommentDTO
 from backend.application.use_cases.create.comment import CreateCommentUseCase
 from backend.application.use_cases.get.comment import GetCommentByMealIdUseCase
 from backend.application.use_cases.get.user import GetUserByIDUseCase
@@ -42,8 +42,13 @@ async def write_comment(
 @require_auth
 async def get_comments_by_meal_id(
     request: BackendRequest,
+    _,
     meal_id: int,
 ):
-    comments = await GetCommentByMealIdUseCase(request.app.ctx.comment_repository).execute(meal_id)
-    
-    return json([comment.to_dict() for comment in comments])
+    comments = await GetCommentByMealIdUseCase(
+        request.app.ctx.comment_repository
+    ).execute(meal_id)
+
+    result = [GetCommentDTO.from_entity(comment) for comment in comments]
+
+    return json({"results": [comment.to_dict() for comment in result]})

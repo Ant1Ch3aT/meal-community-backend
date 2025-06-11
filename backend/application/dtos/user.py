@@ -51,3 +51,13 @@ class JWTUserDTO:
 
     def to_dict(self):
         return asdict(self)
+
+
+@dataclass
+class PrivateUserDTO:
+    name: str
+    """이름"""
+
+    @classmethod
+    def from_entity(cls, entity: User):
+        return cls(entity.name)
